@@ -6,16 +6,8 @@ const App = () => {
   return (
     <div>
       {posts.map((post) => (
-          <ArticlesCard
-            key={post.id}
-            title={post.title}
-            thumbnailUrl={post.thumbnailUrl}
-            createdAt={post.createdAt}
-            categories={post.categories}
-            content={post.content}
-          />
-        )
-      )}
+        <ArticlesCard key={post.id} post={post} />
+      ))}
     </div>
   );
 };
