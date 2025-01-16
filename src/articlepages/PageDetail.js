@@ -2,7 +2,8 @@ import React from "react";
 // import { Header } from "../layout/Header";
 import { useParams } from "react-router-dom";
 import { posts } from "../data/posts";
-import { ArticlesCard } from "../layout/ArticlesCard";
+
+import { ArticlesCardDetail } from "../layout/ArticlesCardDetail";
 
 export const PageDetail = () => {
   const { id } = useParams(); // URLからidを取得する
@@ -12,7 +13,7 @@ export const PageDetail = () => {
       <div class="flex items-center justify-center">
         <img alt="" className="mt-12" src="https://placehold.jp/800x400.png" />
       </div>
-      <ArticlesCard post={post} className="border-none"/> 
+      <ArticlesCardDetail post={post} className="border-none" /> 
     </div>
   );
 };
