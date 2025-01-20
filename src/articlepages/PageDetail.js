@@ -5,6 +5,7 @@ import { ArticlesCardDetail } from "../layout/ArticlesCardDetail";
 export const PageDetail = () => {
   const { id } = useParams(); // URLからidを取得する
   const [post, setPost] = useState(null); // nullを用いて初期値は「まだデータがない」と表現
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchPageDetail = async () => {
       const res = await fetch(
@@ -13,12 +14,17 @@ export const PageDetail = () => {
       const data = await res.json();
       console.log(data); // データが正しく取得できているか確認
       setPost(data.post); // postプロパティに格納されている取得したデータを状態に設定
+      setIsLoading(false); // データ取得後に読み込み中の状態を終了する
     };
     fetchPageDetail();
   }, [id]);
-  // ロードされていない場合の処理
-  if (!post ) {
+  //ローディング中の処理
+  if (isLoading) {
     return <div>読み込み中…</div>;
+  }
+  // postが見つからなかった場合の処理
+  if (!post) {
+    return <div>記事はありません</div>;
   }
   return (
     <div>
