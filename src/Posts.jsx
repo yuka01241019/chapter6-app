@@ -3,7 +3,7 @@ import { ArticlesCard } from "./layout/ArticlesCard";
 
 export const Posts = () => {
   const [posts, setPosts] = useState([]); // [] は状態の初期値。「空の配列」として状態を初期化している。
-  const [isLoading, setisLoading] = useState(true); // isLoadingの初期状態をtrueに設定
+  const [isLoading, setIsLoading] = useState(true); // isLoadingの初期状態をtrueに設定
   // API呼び出しを行う関数
   useEffect(() => {
     const getApi = async () => {
@@ -13,7 +13,7 @@ export const Posts = () => {
       const data = await res.json();
       console.log(data); // データが正しく取得できているか確認
       setPosts(data.posts); // 記事データを設定
-      setisLoading(false); // データ取得後に読み込み中の状態を終了する
+      setIsLoading(false); // データ取得後に読み込み中の状態を終了する
     };
     getApi();
   }, []);
