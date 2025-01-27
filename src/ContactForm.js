@@ -8,6 +8,7 @@ export const ContactForm = () => {
     message: "",
   });
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false); // isLoadingの初期状態をfalse(送信中ではない)に設定
 
   const handleChange = (e) => {
     const name = e.target.name; //e.targetからnameを取得
@@ -27,7 +28,7 @@ export const ContactForm = () => {
 
     //メールアドレス：入力必須＆メールアドレスの形式になっていること
     const emailRegex =
-       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; //正規表現を変数として定義
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; //正規表現を変数として定義
     if (!formData.email) {
       newErrors.email = "メールアドレスは必須です。";
     } else if (!emailRegex.test(formData.email)) {
@@ -54,6 +55,7 @@ export const ContactForm = () => {
     }
     //成功した場合の処理
     setErrors({}); //// エラーがなければ（送信成功やリセット）エラー状態をクリアにする
+    setIsLoading(true); //送信が始まるときにtrueにする
     try {
       const response = await fetch(
         "https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/contacts",
@@ -71,8 +73,11 @@ export const ContactForm = () => {
 
       alert("送信しました。"); //// フォーム送信成功メッセージ
       setFormData({ name: "", email: "", message: "" });
-    } catch (error) { //エラーが発生した場合にエラーをキャッチして処理
+    } catch (error) {
+      //エラーが発生した場合にエラーをキャッチして処理
       alert(error.message);
+    } finally {
+      setIsLoading(false); //送信が終わったら（成功でも失敗でも）falseに戻す
     }
   };
   //フォームの入力値をクリアするための関数
@@ -96,6 +101,7 @@ export const ContactForm = () => {
             name="name"
             onChange={handleChange}
             value={formData.name}
+            disabled={isLoading}
             className=" border border-stone-300 rounded-lg p-3 w-[600px] h-[60px]"
           />
         </div>
@@ -113,6 +119,7 @@ export const ContactForm = () => {
             name="email"
             onChange={handleChange}
             value={formData.email}
+            disabled={isLoading}
             className=" border rounded-lg p-3 border-stone-300 w-[600px] h-[60px]"
           />
         </div>
@@ -129,6 +136,7 @@ export const ContactForm = () => {
             name="message"
             value={formData.message}
             onChange={handleChange}
+            disabled={isLoading}
             className=" border rounded-md p-3  border-stone-300 w-[600px] h-[250px]"
           ></textarea>
         </div>
@@ -140,6 +148,7 @@ export const ContactForm = () => {
         <div className="flex space-x-4 justify-center font-bold">
           <button
             type="submit"
+            disabled={isLoading}
             className="py-2 px-4 border block rounded-lg  text-white bg-gray-800"
           >
             送信
@@ -148,6 +157,7 @@ export const ContactForm = () => {
           <button
             type="reset"
             onClick={handleClear}
+            disabled={isLoading}
             className="py-2 px-4 border rounded-md bg-slate-200"
           >
             クリア
