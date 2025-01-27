@@ -1,12 +1,14 @@
+import { Link } from "react-router-dom";
+
 export const Header = () => {
   return (
     <header className="bg-zinc-700 font-bold text-white py-7 px-5">
-      <a href="/" className="">
+      <Link to="/" className="">
         Blog
-      </a>
-      <a href="/" className="float-right">
+      </Link>
+      <Link to="/contact" className="float-right">
         お問い合わせ
-      </a>
+      </Link>
     </header>
   );
 };

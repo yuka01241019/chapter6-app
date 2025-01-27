@@ -5,6 +5,7 @@ import { Header } from "./layout/Header";
 import { Routes, Route } from "react-router-dom";
 import { PageDetail } from "./articlePages/PageDetail";
 import { Posts } from "./Posts"; // Postsコンポーネントをインポート
+import { ContactForm } from "./ContactForm"; // ContactFormコンポーネントをインポート
 
 const App = () => {
   return (
@@ -16,6 +17,8 @@ const App = () => {
         <Route path="/" element={<Posts />} />
         {/* 記事詳細 */}
         <Route path="/posts/:id" element={<PageDetail />} />
+        {/* お問い合わせ */}
+        <Route path="/contact" element={<ContactForm />} />
       </Routes>
     </div>
   );
